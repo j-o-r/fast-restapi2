@@ -1,0 +1,14 @@
+
+src
+Jakefile
+todo.md
+.jshintrc
+.npmignore
+.git
+.gitignore
+/cache/*
+*.sublime*
+specs
+specs2
+docs
+typings
