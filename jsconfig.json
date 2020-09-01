@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "checkJs": true,
+    "target": "es6",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/*",
+        "lib/*"
+      ]
+    }
+  },
+  "include": [
+    "lib/**/*",
+    "node_modules/fast-restapi/lib/**/*",
+    "scenarios/**/*"
+  ],
+  "types": [
+    "node"
+  ]
+}

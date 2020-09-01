@@ -1,0 +1,30 @@
+{
+  "author": "Jorrit Duin <jorrit.duin@gmail.com>",
+  "name": "fast-restapi2",
+  "type": "module",
+  "description": "API and static file server",
+  "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:duino/fast-restapi2.git"
+  },
+  "main": "lib/api-server.js",
+  "engines": {
+    "node": ">=14.x"
+  },
+  "dependencies": {
+    "formidable": ">=1.x"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "form-data": "^0.x",
+    "parker-promise": "^0.1.0"
+  },
+  "optionalDependencies": {},
+  "scripts": {
+    "test:http": "./scenarios/httpScenario.js",
+    "test:wrapper": "./scenarios/ClientWrapperScenario.js",
+    "test": "npm run test:wrapper && npm run test:http"
+  },
+  "license": "LGPL-3.0"
+}
