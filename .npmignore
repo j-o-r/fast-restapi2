@@ -10,5 +10,6 @@ todo.md
 *.sublime*
 specs
 specs2
+scenarios
 docs
 typings
