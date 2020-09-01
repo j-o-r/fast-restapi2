@@ -2,19 +2,17 @@
   "parserOptions": {
     "ecmaVersion": 8,
       "ecmaFeatures": {
-        "experimentalObjectRestSpread": true,
         "jsx": true
       },
       "sourceType": "module"
   },
     "env": {
       "browser": false,
-      "amd": true,
-      "es6": true,
-      "node": true
+      "node": true,
+      "es6": true
     },
     "plugins": [
-      "security",
+    "security",
     "standard",
     "promise",
     "node",
@@ -25,12 +23,6 @@
     "globals": {
     },
     "rules": {
-      "valid-jsdoc": ["error", {
-        "requireReturn": true,
-        "requireReturnType": true,
-        "requireParamDescription": true,
-        "requireReturnDescription": true
-      }],
       "accessor-pairs": "error",
       "arrow-spacing": ["error", { "before": true, "after": true }],
       "block-spacing": ["error", "always"],
@@ -57,7 +49,7 @@
       "keyword-spacing": ["error", { "before": true, "after": true }],
       "new-cap": ["error", { "newIsCap": true, "capIsNew": false }],
       "new-parens": "error",
-      "no-array-constructor": "error",
+      "no-array-constructor":  0,
       "no-caller": "error",
       "no-class-assign": "error",
       "no-compare-neg-zero": "error",
@@ -137,19 +129,15 @@
       "no-unreachable": "error",
       "no-unsafe-finally": "error",
       "no-unsafe-negation": "error",
-      "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true, "allowTaggedTemplates": true }],
-      "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }],
       "no-use-before-define": ["error", { "functions": false, "classes": false, "variables": false }],
       "no-useless-call": "error",
       "no-useless-computed-key": "error",
       "no-useless-constructor": "error",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
-      "no-useless-return": "error",
       "no-whitespace-before-property": "error",
       "no-with": "error",
       "object-property-newline": ["error", { "allowMultiplePropertiesPerLine": true }],
-      "one-var": ["error", { "initialized": "never" }],
       "operator-linebreak": ["error", "after", { "overrides": { "?": "before", ":": "before" } }],
       "padded-blocks": ["error", { "blocks": "never", "switches": "never", "classes": "never" }],
       "prefer-promise-reject-errors": "error",
@@ -158,7 +146,6 @@
       "semi": ["error", "always", { "omitLastInOneLineBlock": true}],
       "semi-spacing": ["error", { "before": false, "after": true }],
       "space-before-blocks": ["error", "always"],
-      "space-before-function-paren": ["error", "always"],
       "space-in-parens": ["error", "never"],
       "space-infix-ops": "error",
       "space-unary-ops": ["error", { "words": true, "nonwords": false }],
@@ -190,24 +177,37 @@
       "standard/computed-property-even-spacing": ["error", "even"],
       "standard/no-callback-literal": "error",
       "standard/object-curly-even-spacing": ["error", "either"],
-      "jsdoc/check-param-names": 1,
-      "jsdoc/check-tag-names": 1,
-      "jsdoc/check-types": 1,
-      "jsdoc/newline-after-description": 1,
-      "jsdoc/require-description-complete-sentence": 0,
-      "jsdoc/require-example": 0,
-      "jsdoc/require-hyphen-before-param-description": 1,
-      "jsdoc/require-param": 1,
-      "jsdoc/require-param-description": 1,
-      "jsdoc/require-param-name": 1,
-      "jsdoc/require-param-type": 1,
-      "jsdoc/require-returns-description": 0,
-      "jsdoc/require-returns-type": 0
+        "jsdoc/check-param-names": 1,
+        "jsdoc/check-tag-names": 1,
+        "jsdoc/check-types": 1,
+        "jsdoc/newline-after-description": 1,
+        "jsdoc/require-description-complete-sentence": 0,
+        "jsdoc/require-example": 0,
+        "jsdoc/require-hyphen-before-param-description": 1,
+        "jsdoc/require-param": 1,
+        "jsdoc/require-param-description": 0,
+        "jsdoc/require-param-name": 1,
+        "jsdoc/require-param-type": 1,
+        "jsdoc/require-returns-type": 1
     },
-    "settings": {
+"settings": {
       "jsdoc": {
         "additionalTagNames": {
-          "customTags": []
+          "customTags": [
+            "apiSuccessExample",
+            "api",
+            "apiVersion",
+            "apiName",
+            "apiGroup",
+            "apiHeader",
+            "apiSuccess",
+            "apiError",
+            "apiErrorExample",
+            "apiPermission",
+            "apiParam",
+            "apiSampleRequest",
+            "apiParamExample"
+          ]
         }
       }
     }

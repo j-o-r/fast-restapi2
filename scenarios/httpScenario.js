@@ -28,58 +28,40 @@ var test = new Parker();
 test.do(
   '1: all this server starts fail',
   function (p) {
-    assert.throws(
-      function () {
-        // No options
-        server.create({ip: '127.0.0.1'});
-      },
-      'error'
-    );
+    // No port
+    server.create('v1', {host: '127.0.0.1'}).then(() => {
+      p.fail();
+    }).catch(() => {
+      p.done();
+    });
     p.done();
   },
   function (p) {
-    assert.throws(
-      function () {
-        // No valid webpath
-        server.create({ip: '127.0.0.1', port: 8080, webpath: 'pipo'});
-      },
-      'error'
-    );
+    // No host
+    server.create('v1', {port:8080}).then(() => {
+      p.fail();
+    }).catch(() => {
+      p.done();
+    });
     p.done();
   },
   function (p) {
-    assert.throws(
-      function () {
-        // No valid webpath either
-        server.create({ip: '127.0.0.1', port: 8080, webpath: '/scenarios'});
-      },
-      'error'
-    );
-    p.done();
-  },
-  function (p) {
-    assert.throws(
-      function () {
-        // No callback
-        server.create.createServer('httpserver', 'api.http', {port: 9022, host: '127.0.0.1', webpath: '/scenarios/www'});
-      },
-      'error'
-    );
+    // No api
+    server.create('v1', {host: '127.0.0.1', post:8080}).then(() => {
+      p.fail();
+    }).catch(() => {
+      p.done();
+    });
     p.done();
   }
-);
 
+);
 test.thenDo('Succesfull start a server',
   function (p) {
-    assert.doesNotThrow(
-      function () {
-        server.create('testcontroller', {port: 9022, host: '127.0.0.1', webpath: '/scenarios/www'}, TestController, function () {
-          // console.log(res)
-          p.done();
-        });
-      },
-      'error'
-    );
+    server.create('testcontroller', {port: 9022, host: '127.0.0.1'}, TestController).then(() => {
+      // console.log(res)
+      p.done();
+    });
   }
 );
 test.thenDo('Test the api',
@@ -315,20 +297,20 @@ test.thenDo('Test the api',
     });
 test.thenDo('Stop a server',
   function (p) {
-    assert.doesNotThrow(
-      function () {
-        server.delete(function () {
-          // console.log(res)
-          p.done();
-        });
-      },
-      'hanguperror'
-    );
-  });
+    server.delete().then(() => {
+      // console.log(res)
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  }
+);
 test.whenDone(
   function () {
     let endTime = new Date().getTime();
     console.log(color.GREEN + 'Succesfull finished in: ' + (endTime - startTime) + ' ms' + color.RESET);
+    process.exit();
   })
 // .whenException(function (e) {
 //   process.stdout.write(color.RED)
@@ -339,6 +321,8 @@ test.whenDone(
     process.stdout.write(color.RED);
     console.error(e);
     process.stdout.write(color.RESET);
+    process.exit(1);
   });
+process.stdin.resume();
 /* eslint-enable no-console */
 // vim: et:ts=2:sw=2:sts=2

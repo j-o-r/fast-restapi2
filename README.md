@@ -2,6 +2,8 @@
 
 Fast http api server
 
+module type es6 ready
+
 ```
 class TestController {
 
@@ -16,7 +18,7 @@ class TestController {
   };
 }
 
-var server = require('fast-restapi');
+import server from 'fast-restapi2';
 server.create('api',{port:9022,host:'127.0.0.1'},TestController, function(res){
   // console.log(res)
 });
