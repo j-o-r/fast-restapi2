@@ -3,7 +3,7 @@
   "name": "fast-restapi2",
   "type": "module",
   "description": "Fast, slim API server",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/j-o-r/fast-restapi2.git"

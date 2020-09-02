@@ -284,9 +284,9 @@ test.thenDo('Test the api',
           // This is the way
           resData.trim();
           resOb = JSON.parse(resData);
-          assert.strictEqual(resOb.fields.my_field, 'my value');
-          assert.strictEqual(fs.existsSync(resOb.files[0].src), true);
-          fs.unlinkSync(resOb.files[0].src);
+          assert.strictEqual(resOb.my_field, 'my value');
+          assert.strictEqual(fs.existsSync(resOb.UPLOADED_FORM_FILES[0].src), true);
+          fs.unlinkSync(resOb.UPLOADED_FORM_FILES[0].src);
           p.done();
         });
         res.on('error', function (e) {
