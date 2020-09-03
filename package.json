@@ -26,5 +26,14 @@
     "test:wrapper": "./scenarios/ClientWrapperScenario.js",
     "test": "npm run test:wrapper && npm run test:http"
   },
-  "license": "LGPL-3.0"
+  "license": "LGPL-3.0",
+  "keywords": [
+    "rest",
+    "es6",
+    "module",
+    "light",
+    "http",
+    "socket",
+    "proxy"
+  ]
 }
