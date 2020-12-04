@@ -9,6 +9,7 @@
     "url": "https://github.com/j-o-r/fast-restapi2.git"
   },
   "main": "lib/api-server.js",
+  "types": "types/types.d.ts",
   "engines": {
     "node": ">=14.x"
   },
@@ -18,10 +19,13 @@
   "devDependencies": {
     "@types/node": "^11.13.0",
     "form-data": "^0.x",
-    "parker-promise": "^0.1.0"
+    "jsdoc": "^3.6.6",
+    "parker-promise": "^0.1.0",
+    "tsd-jsdoc": "^2.5.0"
   },
   "optionalDependencies": {},
   "scripts": {
+    "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r lib/. -d types",
     "test:http": "./scenarios/httpScenario.js",
     "test:wrapper": "./scenarios/ClientWrapperScenario.js",
     "test": "npm run test:wrapper && npm run test:http"

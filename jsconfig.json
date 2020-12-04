@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports" :true,
     "checkJs": true,
     "target": "es6",
     "baseUrl": ".",
@@ -14,7 +15,6 @@
   },
   "include": [
     "lib/**/*",
-    "node_modules/fast-restapi/lib/**/*",
     "scenarios/**/*"
   ],
   "types": [
