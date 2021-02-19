@@ -125,6 +125,20 @@ test.thenDo('Test the api',
   },
   function (p) {
     let hdr = {};
+    hdr['Accept'] = 'application/vnd.api+json';
+    request('http://127.0.0.1:9022/testcontroller/stream', 'GET', hdr).then((res) => {
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.headers['content-type'], 'application/vnd.api+json');
+      assert.strictEqual(res.response.test.length, 6);
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  },
+
+  function (p) {
+    let hdr = {};
     hdr['Accept'] = 'application/xml';
     request('http://127.0.0.1:9022/testcontroller/stream.json', 'GET', hdr).then((res) => {
       assert.strictEqual(res.status, 404);
@@ -244,6 +258,25 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
+  function testEchoVnD (p) {
+    var group = {
+      name: 'test group vnd',
+      members: [100276, '1000676']
+    };
+    let hdr = {
+      'Accept': 'application/vnd.api+json'
+    }
+    request('http://127.0.0.1:9022/testcontroller/echo', 'POST', hdr, group).then((res) => {
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.headers['content-type'], 'application/vnd.api+json');
+      assert.strictEqual(res.response.data.name, 'test group vnd');
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  },
+
   function testMisformed (p) {
     // This doens't exsis
     var group = {
