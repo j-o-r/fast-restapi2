@@ -55,11 +55,11 @@ declare class ClientWrapper {
      * response.write
      *
      * @param {string|Buffer} message - string to write
-     * @param {string} [encoding] - format to write out
+     * @param {BufferEncoding} [encoding] - format to write out
      * https://nodejs.org/api/http.html#http_response_write_chunk_encoding_callback
      * @returns {void}
      */
-    write(message: string | Buffer, encoding?: string): void;
+    write(message: string | Buffer, encoding?: BufferEncoding): void;
     /**
      * Serve something with a http status code
      *

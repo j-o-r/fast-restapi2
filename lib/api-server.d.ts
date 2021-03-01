@@ -1,5 +1,18 @@
 export default Api;
 /**
+ * Represents a Options object
+ */
+export type OptionsObject = {
+    /**
+     * -
+     */
+    port?: number;
+    /**
+     * -
+     */
+    host?: string;
+};
+/**
  * public api
  */
 declare class Api {
@@ -7,11 +20,11 @@ declare class Api {
      * Create, start a server
      *
      * @param  {string} preFix - namespace part of the URL to distinguish tha API ot a static file
-     * @param  {Object} options - http(s) startup options
+     * @param  {OptionsObject} options - http(s) startup options
      * @param  {Object} app - class definition with status functions
      * @returns {Promise<Object>}
      */
-    static create(preFix: string, options: any, app: any): Promise<any>;
+    static create(preFix: string, options: OptionsObject, app: any): Promise<any>;
     /**
      * Stop, delete a server
      *
