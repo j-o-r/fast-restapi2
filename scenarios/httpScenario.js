@@ -220,7 +220,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.response.query.pipo, 'circus');
-      assert.strictEqual(res.response.query.space, '%20');
+      assert.strictEqual(res.response.query.space, ' ');
       p.done();
     }).catch((error) => {
       console.log(error);
@@ -295,7 +295,7 @@ test.thenDo('Test the api',
         p.fail();
         return;
       }
-      assert.strictEqual(res.statusCode, 400);
+      assert.strictEqual(res.statusCode, 500);
       p.done();
     });
   }).thenDo('Should be able to post multi-part form data', 5000,
