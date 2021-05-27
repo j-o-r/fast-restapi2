@@ -143,6 +143,11 @@ class TestController {
       client.serve(500, error);
     });
   }
+
+  static contenttype (client) {
+    client.addHeader('Content-Type', 'plain/text', true);
+    client.serve(200, 'i,am,plain,text');
+  }
 }
 export default TestController;
 // vim: set ts=2 sw=2 et :

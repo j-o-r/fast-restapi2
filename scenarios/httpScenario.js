@@ -128,8 +128,9 @@ test.thenDo('Test the api',
     hdr['Accept'] = 'application/vnd.api+json';
     request('http://127.0.0.1:9022/testcontroller/stream', 'GET', hdr).then((res) => {
       assert.strictEqual(res.status, 200);
-      assert.strictEqual(res.headers['content-type'], 'application/vnd.api+json');
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.response.test.length, 6);
+
       p.done();
     }).catch((error) => {
       console.log(error);
@@ -243,6 +244,20 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
+  // test content-type
+  function (p) {
+    let hdr = {};
+    request('http://127.0.0.1:9022/testcontroller/contenttype', 'GET', hdr).then((res) => {
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.headers['content-type'], 'plain/text');
+      assert.strictEqual(res.response, 'i,am,plain,text');
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  },
+
   function testEcho (p) {
     var group = {
       name: 'test group 2',
@@ -268,7 +283,7 @@ test.thenDo('Test the api',
     }
     request('http://127.0.0.1:9022/testcontroller/echo', 'POST', hdr, group).then((res) => {
       assert.strictEqual(res.status, 200);
-      assert.strictEqual(res.headers['content-type'], 'application/vnd.api+json');
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.response.data.name, 'test group vnd');
       p.done();
     }).catch((error) => {

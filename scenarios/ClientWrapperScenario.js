@@ -22,6 +22,8 @@
   };
 
   const test = new Parker();
+  let req = {};
+  let res = {};
 
   test.do('Test the NON server wrapper methods',
     function isObject (p) {
@@ -40,6 +42,7 @@
       p.done();
     },
     function mallFormedHeaders (p) {
+      // this is not added, but will not throw either
       assert.doesNotThrow(function () {
         let req = {};
         let res = {};
@@ -69,7 +72,25 @@
       assert.strictEqual(wrapper.hasOwnProperty('res'), false);
       p.done();
     }
-  ).whenDone(function () {
+  );
+test.thenDo('Headers test',
+    function getHeaders(p) {
+      let client = new ClientWrapper(req, res);
+      client.addHeader('Content-Type', 'application/json; charset=utf-8');
+      client.addHeader('Connection', 'close');
+      client.addHeader('Server', 'pipo');
+      client.addHeader('Date', new Date().toUTCString());
+      client.addHeader('Access-Control-Allow-Origin', '*');
+      client.addHeader('Access-Control-Allow-Headers', 'Content-Type');
+      // This is perculiar
+      client.addHeader('content-type', 'plain/txt');
+      let hdr1 = client.getHeader('content-type');
+      let hdr2 = client.getHeader('Content-Type');
+      console.log({hdr1, hdr2});
+      p.done();
+    }
+)
+test.whenDone(function () {
     let endTime = new Date().getTime();
     console.log(color.GREEN + 'Succesfull finished in: ' + (endTime - startTime) + ' ms' + color.RESET);
   }).whenFail(function (e) {
