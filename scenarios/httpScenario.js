@@ -313,7 +313,8 @@ test.thenDo('Test the api',
       assert.strictEqual(res.statusCode, 500);
       p.done();
     });
-  }).thenDo('Should be able to post multi-part form data', 5000,
+  });
+  test.thenDo('Should be able to post multi-part form data', 5000,
     function (p) {
       var resOb;
       var form = new FormData();

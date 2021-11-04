@@ -3,22 +3,21 @@
   "name": "fast-restapi2",
   "type": "module",
   "description": "Fast, slim API server",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/j-o-r/fast-restapi2.git"
   },
   "main": "lib/api-server.js",
   "engines": {
-    "node": ">=14.x"
+    "node": ">=16.x"
   },
   "dependencies": {
-    "@types/node": "^14.14.31",
-    "formidable": ">=1.x"
+    "formidable": "^2.0.1"
   },
   "devDependencies": {
-    "form-data": "^0.x",
-    "jsdoc": "^3.6.6",
+    "@types/node": "^16.11.6",
+    "form-data": "^4.0.0",
     "parker-promise": "^0.1.0"
   },
   "scripts": {
