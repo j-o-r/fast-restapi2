@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// https://nodejs.org/api/assert.html
 import assert from 'assert';
 import path from 'path';
 import FormData from 'form-data';
@@ -24,48 +23,54 @@ var color = {
   RESET: '\u001b[0m'
 };
 
-var test = new Parker();
+const test = new Parker();
 test.do(
   '1: all this server starts fail',
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     // No port
     server.create('v1', {host: '127.0.0.1'}).then(() => {
       p.fail();
     }).catch(() => {
       p.done();
     });
-    p.done();
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     // No host
     server.create('v1', {port:8080}).then(() => {
       p.fail();
     }).catch(() => {
       p.done();
     });
-    p.done();
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     // No api
-    server.create('v1', {host: '127.0.0.1', post:8080}).then(() => {
+    server.create('v1', {host: '127.0.0.1', port:9080}).then(() => {
+      console.log('NOT HERE');
       p.fail();
     }).catch(() => {
       p.done();
     });
-    p.done();
   }
 
 );
 test.thenDo('Succesfull start a server',
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     server.create('testcontroller', {port: 9022, host: '127.0.0.1'}, TestController).then(() => {
       // console.log(res)
       p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
     });
   }
 );
 test.thenDo('Test the api',
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     request('http://127.0.0.1:9022/x03/x00/x00/*/xE0/x00/x00/x00/x00/x00Cookie:%20mstshash=Administr', 'GET').then((res) => {
       assert.strictEqual(res.status, 404);
       p.done();
@@ -74,7 +79,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     request('http://127.0.0.1:9022/index.html', 'GET').then((res) => {
       assert.strictEqual(res.status, 404);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
@@ -84,7 +90,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     let hdr = {};
     hdr['Accept'] = 'application/xml';
     request('http://127.0.0.1:9022/testcontroller/index', 'GET', hdr).then((res) => {
@@ -97,7 +104,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     let hdr = {};
     hdr['Accept'] = 'application/xml';
     request('http://127.0.0.1:9022/testcontroller/error', 'GET', hdr).then((res) => {
@@ -110,7 +118,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     let hdr = {};
     hdr['Accept'] = 'application/xml';
     request('http://127.0.0.1:9022/testcontroller/stream', 'GET', hdr).then((res) => {
@@ -123,7 +132,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     let hdr = {};
     hdr['Accept'] = 'application/vnd.api+json';
     request('http://127.0.0.1:9022/testcontroller/stream', 'GET', hdr).then((res) => {
@@ -137,8 +147,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     let hdr = {};
     hdr['Accept'] = 'application/xml';
     request('http://127.0.0.1:9022/testcontroller/stream.json', 'GET', hdr).then((res) => {
@@ -150,8 +160,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     request('http://127.0.0.1:9022/testcontroller/stream404', 'GET').then((res) => {
       assert.strictEqual(res.status, 404);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
@@ -162,7 +172,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     request('http://127.0.0.1:9022/testcontroller/stream500', 'GET').then((res) => {
       assert.strictEqual(res.status, 500);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
@@ -173,7 +184,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     request('http://127.0.0.1:9022/testcontroller/stream200', 'GET').then((res) => {
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
@@ -184,7 +196,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     // The extension doesn't change a thing
     request('http://127.0.0.1:9022/testcontroller/stream', 'GET').then((res) => {
       assert.strictEqual(res.status, 200);
@@ -196,7 +209,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     // This doens't exsis
     request('http://127.0.0.1:9022/testcontroller/whatisthis', 'GET').then((res) => {
       assert.strictEqual(res.status, 404);
@@ -205,7 +219,8 @@ test.thenDo('Test the api',
       p.done();
     });
   },
-  function testParams (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     request('http://127.0.0.1:9022/testcontroller/params/one/two/three.123', 'GET').then((res) => {
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
@@ -216,6 +231,7 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
+  /** @param {import('parker-promise').ParkerPromise} p */
   function testQuery (p) {
     request('http://127.0.0.1:9022/testcontroller/query?space=%20&pipo=circus&this=10', 'GET').then((res) => {
       assert.strictEqual(res.status, 200);
@@ -229,6 +245,7 @@ test.thenDo('Test the api',
     });
   },
 
+  /** @param {import('parker-promise').ParkerPromise} p */
   function strangeCharsParams (p) {
     var x = encodeURIComponent(escape('pipo/*13934589\/\' .what?#<>')) // eslint-disable-line
     var y = encodeURIComponent(escape('??&&##.xml.json.whatever'));
@@ -244,8 +261,8 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
-  // test content-type
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     let hdr = {};
     request('http://127.0.0.1:9022/testcontroller/contenttype', 'GET', hdr).then((res) => {
       assert.strictEqual(res.status, 200);
@@ -258,6 +275,7 @@ test.thenDo('Test the api',
     });
   },
 
+  /** @param {import('parker-promise').ParkerPromise} p */
   function testEcho (p) {
     var group = {
       name: 'test group 2',
@@ -273,6 +291,7 @@ test.thenDo('Test the api',
       p.fail();
     });
   },
+  /** @param {import('parker-promise').ParkerPromise} p */
   function testEchoVnD (p) {
     var group = {
       name: 'test group vnd',
@@ -292,6 +311,7 @@ test.thenDo('Test the api',
     });
   },
 
+  /** @param {import('parker-promise').ParkerPromise} p */
   function testMisformed (p) {
     // This doens't exsis
     var group = {
@@ -314,38 +334,108 @@ test.thenDo('Test the api',
       p.done();
     });
   });
-  test.thenDo('Should be able to post multi-part form data', 5000,
-    function (p) {
-      var resOb;
-      var form = new FormData();
-      let f1 = path.resolve('./scenarios', 'www', 'large.png');
-      form.append('my_field', 'my value');
-      form.append('my_field2', 'second');
-      form.append('my_file2', fs.createReadStream(f1));
-      form.submit('http://127.0.0.1:9022/testcontroller/form', function (err, res) {
-        assert.strictEqual(err, null);
-        var resData = '';
-        // return true
-        res.on('data', function (chunk) {
-          resData = resData + chunk;
-        });
-        res.on('end', function () {
-          // This is the way
-          resData.trim();
-          resOb = JSON.parse(resData);
-          assert.strictEqual(resOb.my_field, 'my value');
-          assert.strictEqual(fs.existsSync(resOb.UPLOADED_FORM_FILES[0].src), true);
-          fs.unlinkSync(resOb.UPLOADED_FORM_FILES[0].src);
-          p.done();
-        });
-        res.on('error', function (e) {
-          p.fail();
-          console.log('Got error: ' + e.message);
-        });
+test.thenDo('Should be able to post multi-part form data', 5000,
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
+    var resOb;
+    var form = new FormData();
+    let f1 = path.resolve('./scenarios', 'www', 'large.png');
+    form.append('my_field', 'my value');
+    form.append('my_field2', 'second');
+    form.append('my_file2', fs.createReadStream(f1));
+    form.submit('http://127.0.0.1:9022/testcontroller/form', function (err, res) {
+      assert.strictEqual(err, null);
+      var resData = '';
+      // return true
+      res.on('data', function (chunk) {
+        resData = resData + chunk;
+      });
+      res.on('end', function () {
+        // This is the way
+        resData.trim();
+        resOb = JSON.parse(resData);
+        assert.strictEqual(resOb.my_field, 'my value');
+        assert.strictEqual(fs.existsSync(resOb.UPLOADED_FORM_FILES[0].src), true);
+        fs.unlinkSync(resOb.UPLOADED_FORM_FILES[0].src);
+        p.done();
+      });
+      res.on('error', function (e) {
+        p.fail();
+        console.log('Got error: ' + e.message);
       });
     });
+  }
+);
+test.thenDo('test invalid file service',
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
+    let hdr = {};
+    request('http://127.0.0.1:9022/testcontroller/serveInvalidFile', 'GET', hdr).then((res) => {
+      assert.strictEqual(res.status, 404);
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.response, 'Error: File not found');
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  },
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
+    let hdr = {};
+    request('http://127.0.0.1:9022/testcontroller/serveFolder', 'GET', hdr).then((res) => {
+      assert.strictEqual(res.status, 404);
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.response, 'Error: File not found');
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  }
+)
+test.thenDo('Test file service',
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
+    let modified;
+    request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.json', 'GET').then((res) => {
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.response.hello, 'world');
+      modified = res.headers['last-modified'];
+      let hdr = {'if-modified-since': modified};
+      return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.json', 'GET', hdr);
+    }).then((res) => {
+      //test modified
+      assert.strictEqual(res.status, 304);  // not modified
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '0');
+      assert.strictEqual(res.headers['last-modified'], modified);
+      return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.json', 'HEAD')
+    }).then((res) => {
+      //test HEAD
+      assert.strictEqual(res.status, 200);  // HEAD request
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '23');
+      assert.strictEqual(res.headers['last-modified'], modified);
+      assert.strictEqual(res.response, '');
+      return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.text', 'GET')
+    }).then((res) => {
+      // test content type
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.headers['content-type'], 'plain/text');
+      assert.strictEqual(res.response.trim(), 'Hello World');
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  },
+
+)
 test.thenDo('Stop a server',
-  function (p) {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
     server.delete().then(() => {
       // console.log(res)
       p.done();
@@ -356,7 +446,8 @@ test.thenDo('Stop a server',
   }
 );
 test.whenDone(
-  function () {
+  /** @param {import('parker-promise').ParkerPromise} p */
+  () => {
     let endTime = new Date().getTime();
     console.log(color.GREEN + 'Succesfull finished in: ' + (endTime - startTime) + ' ms' + color.RESET);
     process.exit();
@@ -366,7 +457,7 @@ test.whenDone(
 //   console.error(e)
 //   process.stdout.write(color.RESET)
 // })
-  .whenFail(function (e) {
+  .whenFail( (e) => {
     process.stdout.write(color.RED);
     console.error(e);
     process.stdout.write(color.RESET);

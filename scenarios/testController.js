@@ -1,4 +1,7 @@
 'use strict';
+
+import path from 'path';
+
 class TestController {
   // We use the static methods
   //
@@ -10,8 +13,6 @@ class TestController {
 
   static params (client, params) {
     // http://..../testcontroller/params/param1/param2
-    // Serve Status VIA client is more natural
-    // I want to get the params
     client.serve(200, {params: params});
   }
   static query (client) {
@@ -147,6 +148,44 @@ class TestController {
   static contenttype (client) {
     client.addHeader('Content-Type', 'plain/text', true);
     client.serve(200, 'i,am,plain,text');
+  }
+  static serveValidFile (client, params) {
+    let mime;
+    const file = params[0];
+    if (file === 'test.text') {
+      mime = 'plain/text';
+    }
+    const fp = path.resolve(process.cwd(), 'scenarios', 'www', file);
+     client.serveFile(fp, mime).then(() => {
+      // after serving, the client is disposed
+    }).catch((error) => {
+      console.error(error);
+    })
+
+  }
+
+  static serveFolder (client) {
+    // this will error
+    // unable to serve a folder
+    const file = new URL('file://' + process.cwd());
+    client.serveFile(file).then(() => {
+      // nothing
+      // after serving, the client is disposed
+      // a `not found file` is not an error in this context
+    }).catch((error) => {
+      console.error(error);
+    })
+
+  }
+
+  static serveInvalidFile (client) {
+    const file = new URL('file://i/do/not.exsist');
+    client.serveFile(file).then(() => {
+      // nothing
+      // after serving, the client is disposed
+    }).catch((error) => {
+      console.error(error);
+    })
   }
 }
 export default TestController;
