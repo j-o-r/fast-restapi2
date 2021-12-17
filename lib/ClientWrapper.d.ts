@@ -69,8 +69,19 @@ declare class ClientWrapper {
      */
     serve(status: number, message?: any): void;
     /**
+     * Stream a file to the client
+     * (inluding check on HEAD and if-modified-since)
+     * the client is disposed after this call
+     * except if there is an arror during serving
+     *
+     * @param {URL|void} file - full path to file
+     * @param {string} [mime] - mimtype (overrule standard `application/json`)
+     * @returns {Promise<string>}
+     */
+    serveFile(file: URL | void, mime?: string): Promise<string>;
+    /**
      * Open a stream
-     * In json we start an array output '[' in xml an opentag <ns>
+     * Starts an array output '['
      * This is closed in closeStream
      *
      * @param  {string} [ns] - Start of an array namespace
