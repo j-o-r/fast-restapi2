@@ -74,11 +74,19 @@ declare class ClientWrapper {
      * the client is disposed after this call
      * except if there is an arror during serving
      *
-     * @param {URL|void} file - full path to file
+     * @param {URL} file - full path to file
      * @param {string} [mime] - mimtype (overrule standard `application/json`)
      * @returns {Promise<string>}
      */
-    serveFile(file: URL | void, mime?: string): Promise<string>;
+    serveFile(file: URL, mime?: string): Promise<string>;
+    /**
+     * Stream a a folder to the client
+     * the client is disposed after this call
+     *
+     * @param {URL} folder - full path to folder
+     * @returns {Promise<string>}
+     */
+    serveFolder(folder: URL): Promise<string>;
     /**
      * Open a stream
      * Starts an array output '['

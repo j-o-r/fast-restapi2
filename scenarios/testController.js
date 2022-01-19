@@ -155,7 +155,7 @@ class TestController {
     if (file === 'test.text') {
       mime = 'plain/text';
     }
-    const fp = path.resolve(process.cwd(), 'scenarios', 'www', file);
+    const fp = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www', file));
      client.serveFile(fp, mime).then(() => {
       // after serving, the client is disposed
     }).catch((error) => {
@@ -167,8 +167,8 @@ class TestController {
   static serveFolder (client) {
     // this will error
     // unable to serve a folder
-    const file = new URL('file://' + process.cwd());
-    client.serveFile(file).then(() => {
+    const file = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www'));
+    client.serveFolder(file).then(() => {
       // nothing
       // after serving, the client is disposed
       // a `not found file` is not an error in this context

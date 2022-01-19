@@ -384,9 +384,9 @@ test.thenDo('test invalid file service',
   (p) => {
     let hdr = {};
     request('http://127.0.0.1:9022/testcontroller/serveFolder', 'GET', hdr).then((res) => {
-      assert.strictEqual(res.status, 404);
+      assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
-      assert.strictEqual(res.response, 'Error: File not found');
+      assert.strictEqual(res.response.index.length, 3);
       p.done();
     }).catch((error) => {
       console.log(error);
