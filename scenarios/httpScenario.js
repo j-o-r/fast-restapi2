@@ -108,6 +108,21 @@ test.thenDo('Test the api',
   (p) => {
     let hdr = {};
     hdr['Accept'] = 'application/xml';
+    request('http://127.0.0.1:9022/testcontroller/index.json', 'GET', hdr).then((res) => {
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.response.joe[0], 'bar');
+      p.done();
+    }).catch((error) => {
+      console.log(error);
+      p.fail();
+    });
+  },
+
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
+    let hdr = {};
+    hdr['Accept'] = 'application/xml';
     request('http://127.0.0.1:9022/testcontroller/error', 'GET', hdr).then((res) => {
       assert.strictEqual(res.status, 500);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
@@ -152,7 +167,7 @@ test.thenDo('Test the api',
     let hdr = {};
     hdr['Accept'] = 'application/xml';
     request('http://127.0.0.1:9022/testcontroller/stream.json', 'GET', hdr).then((res) => {
-      assert.strictEqual(res.status, 404);
+      assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       p.done();
     }).catch((error) => {
@@ -215,7 +230,7 @@ test.thenDo('Test the api',
     request('http://127.0.0.1:9022/testcontroller/whatisthis', 'GET').then((res) => {
       assert.strictEqual(res.status, 404);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
-      assert.strictEqual(res.response.error, 'File not found.');
+      assert.strictEqual(res.response, 'Error: File not found');
       p.done();
     });
   },
