@@ -101,9 +101,11 @@ test.thenDo('Headers test',
 test.whenDone(function () {
   let endTime = new Date().getTime();
   console.log(color.GREEN + 'Succesfull finished in: ' + (endTime - startTime) + ' ms' + color.RESET);
+  process.exit();
 }).whenFail(function (e) {
   process.stdout.write(color.RED);
   console.error(e);
   process.stdout.write(color.RESET);
+  process.exit(1);
 });
 // vim: set ts=2 sw=2 et :
