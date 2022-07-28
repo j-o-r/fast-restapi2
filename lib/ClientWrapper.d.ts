@@ -31,6 +31,10 @@ declare class ClientWrapper {
     /**
      * Add a header to the server repsonse
      *
+     * https://www.rfc-editor.org/rfc/rfc7230#section-3.2
+     * Fields are case-insensitive, so we use lowercase by default
+     * to prevent double headers
+     *
      * @param  {string} k - key
      * @param  {string|number} v - value
      * @param  {boolean} [override] - overwrite key

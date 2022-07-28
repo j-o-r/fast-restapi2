@@ -11,7 +11,7 @@ import helper from './helper.js';
 import server from '../lib/api-server.js';
 const startTime = new Date().getTime();
 
-var color = {
+const color = {
   BLACK: '\u001b[30m',
   RED: '\u001b[31m',
   GREEN: '\u001b[32m',

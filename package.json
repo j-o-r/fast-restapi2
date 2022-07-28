@@ -3,28 +3,30 @@
   "name": "fast-restapi2",
   "type": "module",
   "description": "Fast, slim API server",
-  "version": "2.3.4",
+  "version": "2.4.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/j-o-r/fast-restapi2.git"
   },
   "main": "lib/api-server.js",
   "engines": {
-    "node": ">=16.x"
+    "node": ">=18.x"
   },
   "dependencies": {
     "formidable": "^2.0.1"
   },
   "devDependencies": {
-    "@types/node": "^16.11.6",
-    "form-data": "^4.0.0",
+    "@types/node": "^18.x",
+    "form-data": "^4.0.x",
     "parker-promise": "^1.0.1"
   },
   "scripts": {
     "test:http": "./scenarios/httpScenario.js",
     "test:wrapper": "./scenarios/ClientWrapperScenario.js",
+    "test:mime": "./scenarios/mime.js",
     "types": "tsc lib/*.js --declaration --allowJs --emitDeclarationOnly",
-    "test": "npm run test:wrapper && npm run test:http"
+    "test": "npm run test:wrapper && npm run test:http && npm run test:mime",
+    "build:mime": "./tools/buildMime.js"
   },
   "license": "LGPL-3.0",
   "keywords": [

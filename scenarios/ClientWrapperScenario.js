@@ -83,16 +83,18 @@ test.thenDo('Headers test',
   function getHeaders(p) {
     let client = new ClientWrapper(req, res);
     client.addHeader('Content-Type', 'application/json; charset=utf-8');
+    client.addHeader('content-type', 'plain/txt');
     client.addHeader('Connection', 'close');
     client.addHeader('Server', 'pipo');
     client.addHeader('Date', new Date().toUTCString());
     client.addHeader('Access-Control-Allow-Origin', '*');
     client.addHeader('Access-Control-Allow-Headers', 'Content-Type');
-    // This is perculiar
-    client.addHeader('content-type', 'plain/txt');
+    // Case insensitive
     let hdr1 = client.getHeader('content-type');
     let hdr2 = client.getHeader('Content-Type');
-    console.log({hdr1, hdr2});
+    assert.strictEqual(hdr1, hdr2)
+    assert.strictEqual(hdr1, 'application/json; charset=utf-8');
+    console.log(hdr1);
     p.done();
   }
 )
