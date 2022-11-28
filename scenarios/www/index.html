@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload File</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/css/uikit.min.css" />
+  </head>
+  <body>
+    <div class="uk-container uk-margin-top">
+      <form class="uk-form-horizontal uk-margin-large" action="http://127.0.0.1:8080/testcontroller/echo" method="post">
+        <!-- COLLECT META -->
+        <div class="uk-margin">
+          <label class="uk-form-label">Owner:*</label>
+          <div class="uk-form-controls">
+            <input id="select_owner"  autocomplete="off" class="dropdown-input uk-input" />
+          </div>
+        </div>
+        <div class="uk-margin">
+          <label class="uk-form-label">Data Channel:*</label>
+          <div class="uk-form-controls">
+            <input id="select_channel"  autocomplete="off" class="dropdown-input uk-input" />
+          </div>
+        </div>
+        <div class="uk-margin">
+          <label class="uk-form-label">Supplier:*</label>
+          <div class="uk-form-controls">
+            <input id="select_supplier"  autocomplete="off" class="dropdown-input uk-input" />
+          </div>
+        </div>
+        <div class="uk-margin">
+          <label class="uk-form-label">Target Group:*</label>
+          <div class="uk-form-controls">
+            <input id="select_group"  autocomplete="off" class="dropdown-input uk-input" />
+          </div>
+        </div>
+        <div class="uk-margin">
+          <label class="uk-form-label">File Type:*</label>
+          <div class="uk-form-controls">
+            <input id="select_type"  autocomplete="off" class="dropdown-input uk-input" />
+          </div>
+        </div>
+        <div class="uk-margin">
+          <label class="uk-form-label">Region:*</label>
+          <div class="uk-form-controls">
+            <select id="select_region" class="uk-select">
+              <option selected="selected" value="nl-NL" >Netherlands</option>
+              <option value="nl-BE" >Belgium (Dutch)</option>
+              <option value="fr-BE" >Belgium (French)</option>
+              <option value="de-DE" >Germany</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="uk-margin">
+          <label class="uk-form-label">Due Date:*</label>
+          <div class="uk-form-controls">
+            <input type="date" id="id_duedate" name="duedate" class="uk-input" style="max-width:200px"/>
+          </div>
+        </div>
+        <div class="uk-margin">
+          <label class="uk-form-label">Replace existing data:*</label>
+          <div class="uk-form-controls">
+            <select id="select_replace" class="uk-select">
+              <option value="-1" >Choose one</option>
+              <option value="1" >Yes</option>
+              <option value="0" >No</option>
+            </select>
+          </div>
+        </div>
+        <div class="uk-margin" >
+          <label class="uk-form-label">Subject:</label>
+          <div class="uk-form-controls">
+            <input class="uk-input" id="fu_onderwerp" name="subject" placeholder="Subject"/>
+          </div>
+        </div>
+        <div class="uk-margin">
+          <label class="uk-form-label">Description:</label>
+          <div class="uk-form-controls">
+            <textarea class="uk-textarea" id="fu_description" name="description" placeholder="Description, remarks"/></textarea>
+          </div>
+        </div>
+        <div id="zenTicket" class="uk-margin">
+          <label class="uk-form-label">Zendesk ticket:</label>
+          <div class="uk-form-controls">
+            <input type="number" class="uk-input" id="fu_ticket" name="ticket" placeholder="Zendesk ticket number"/>
+          </div>
+        </div>
+
+        <div class="uk-margin">
+          <label class="label">File:*</label>
+          <div class="uk-form-controls">
+            <div uk-form-custom="target: true">
+              <input name="link" type="file" id="file-upload" accept="application/zip,.dr3">
+              <input class="uk-input uk-form-width-medium" type="text" placeholder="Select a File">
+            </div>
+            <button class="uk-button uk-button-primary" id="do-upload">Send</button>
+           <button type="submit" >Send</button>
+          </div>
+        </div>
+        <div style="display:none" id="userNotice" class="uk-alert-warning" uk-alert>
+          <p id="userNoticeText"></p>
+        </div>
+
+      </form>
+
+    </div>
+    <!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/js/uikit-icons.min.js"></script>
+  </body>
+</html>
+

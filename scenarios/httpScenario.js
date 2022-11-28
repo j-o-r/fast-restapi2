@@ -308,14 +308,15 @@ test.thenDo('Test the api',
   },
   /** @param {import('parker-promise').ParkerPromise} p */
   function testEchoVnD (p) {
-    var group = {
+    const group = {
       name: 'test group vnd',
       members: [100276, '1000676']
     };
-    let hdr = {
+    const hdr = {
       'Accept': 'application/vnd.api+json'
     }
     request('http://127.0.0.1:9022/testcontroller/echo', 'POST', hdr, group).then((res) => {
+      console.log(res);
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.response.data.name, 'test group vnd');
@@ -401,7 +402,7 @@ test.thenDo('test invalid file service',
     request('http://127.0.0.1:9022/testcontroller/serveFolder', 'GET', hdr).then((res) => {
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
-      assert.strictEqual(res.response.index.length, 3);
+      assert.strictEqual(res.response.index.length, 5);
       p.done();
     }).catch((error) => {
       console.log(error);

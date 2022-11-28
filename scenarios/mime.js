@@ -31,6 +31,8 @@ test.do('test' ,
     assert.strictEqual(m, 'application/json; charset=utf-8');
     m = mime('a.js'); // capital json
     assert.strictEqual(m, 'text/javascript; charset=utf-8');
+    m = mime('/data/flow-service/files/72a/bb12443b46f20553c945bda842580.xml');
+    assert.strictEqual(m, 'text/xml');
     p.done();
   }
 );
