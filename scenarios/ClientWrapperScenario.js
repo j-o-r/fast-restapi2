@@ -5,7 +5,7 @@
 // https://nodejs.org/api/assert.html
 import assert from 'assert';
 import Parker from 'parker-promise';
-import ClientWrapper from '../lib/ClientWrapper.js';
+import {ClientWrapper} from '../lib/ClientWrapper.js';
 const startTime = new Date().getTime();
 // const fs = require('fs')
 
