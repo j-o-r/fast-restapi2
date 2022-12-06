@@ -1,10 +1,9 @@
 /// <reference types="node" />
-export default ClientWrapper;
 export type HTTP = typeof import('http');
 /**
  * @memberof module:fast-restapi2
  */
-declare class ClientWrapper {
+export class ClientWrapper {
     /**
      * @param {import('http').IncomingMessage} req - Class: http.IncomingMessage
      * @param {import('http').ServerResponse} res - Class: http.ServerResponse
@@ -122,3 +121,22 @@ declare class ClientWrapper {
      */
     end(): void;
 }
+/**
+ * @typedef {typeof import('http')} HTTP
+ */
+/**
+ * Determine a javascript type
+ *
+ * @private
+ * @param {any} fn - Any let type
+ * @returns {string} The object / let type name
+ */
+export function jsType(fn: any): string;
+/**
+ * 'Code Safe' has own prop
+ *
+ * @param {any} o - object to examine
+ * @param {string} p - property to look for
+ * @returns {boolean}
+ */
+export function hasProp(o: any, p: string): boolean;
