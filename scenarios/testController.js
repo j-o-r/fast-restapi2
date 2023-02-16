@@ -63,7 +63,6 @@ class TestController {
     }
     // content.push('STRING')
     content.push([1, 2, 3, 4, 5]);
-    // console.log(VNLS.jsType([1,2,3,4,5]))
     content.push(new Date());
     content.push({});
     i = 0;
@@ -124,8 +123,8 @@ class TestController {
         escape: ' escape " me'
       });
     }
-
     content.push(new Error('Ignore me'));
+    // content.push('Ignore me');
     i = 0;
     client.openStream('test');
     for (; i < content.length; i++) {
@@ -160,8 +159,7 @@ class TestController {
       // after serving, the client is disposed
     }).catch((error) => {
       console.error(error);
-    })
-
+    });
   }
 
   static serveFolder (client) {
@@ -174,8 +172,19 @@ class TestController {
       // a `not found file` is not an error in this context
     }).catch((error) => {
       console.error(error);
-    })
-
+    });
+  }
+  static serveFolderData (client) {
+    // this will error
+    // unable to serve a folder
+    const file = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www'));
+    client.serveFolderData(file).then(() => {
+      // nothing
+      // after serving, the client is disposed
+      // a `not found file` is not an error in this context
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   static serveInvalidFile (client) {
@@ -185,7 +194,7 @@ class TestController {
       // after serving, the client is disposed
     }).catch((error) => {
       console.error(error);
-    })
+    });
   }
 }
 export default TestController;

@@ -38,7 +38,7 @@ test.do(
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
     // No host
-    server.create('v1', {port:8080}).then(() => {
+    server.create('v1', {port: 8080}).then(() => {
       p.fail();
     }).catch(() => {
       p.done();
@@ -47,7 +47,7 @@ test.do(
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
     // No api
-    server.create('v1', {host: '127.0.0.1', port:9080}).then(() => {
+    server.create('v1', {host: '127.0.0.1', port: 9080}).then(() => {
       console.log('NOT HERE');
       p.fail();
     }).catch(() => {
@@ -60,10 +60,9 @@ test.thenDo('Succesfull start a server',
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
     server.create('testcontroller', {port: 9022, host: '127.0.0.1'}, TestController).then(() => {
-      // console.log(res)
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   }
@@ -75,7 +74,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.status, 404);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -86,7 +85,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -100,7 +99,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.joe[0], 'bar');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -114,7 +113,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.joe[0], 'bar');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -129,7 +128,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response, 'Error: an error');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -143,7 +142,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.test.length, 6);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -158,7 +157,7 @@ test.thenDo('Test the api',
 
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -171,7 +170,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -183,7 +182,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.test.length, 0);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -195,7 +194,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.test.length, 1);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -207,7 +206,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.test.length, 3);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -220,7 +219,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.test.length, 6);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -242,7 +241,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.params.length, 3);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -255,7 +254,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.query.space, ' ');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -272,7 +271,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.params.length, 3);
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -285,7 +284,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response, 'i,am,plain,text');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -302,7 +301,7 @@ test.thenDo('Test the api',
       assert.strictEqual(res.response.data.name, 'test group 2');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -314,15 +313,14 @@ test.thenDo('Test the api',
     };
     const hdr = {
       'Accept': 'application/vnd.api+json'
-    }
+    };
     request('http://127.0.0.1:9022/testcontroller/echo', 'POST', hdr, group).then((res) => {
-      console.log(res);
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.response.data.name, 'test group vnd');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
@@ -330,11 +328,11 @@ test.thenDo('Test the api',
   /** @param {import('parker-promise').ParkerPromise} p */
   function testMisformed (p) {
     // This doens't exsis
-    var group = {
+    const group = {
       name: 'test group 444',
       members: [100276, '1000676']
     };
-    var pst = helper.toJson(group);
+    const pst = helper.toJson(group);
     pst.data = 'Break me' + pst.data + 'Add something strange';
     // The posted data is longer then the content length
     // The posted data is not valid JSON
@@ -353,15 +351,15 @@ test.thenDo('Test the api',
 test.thenDo('Should be able to post multi-part form data', 5000,
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
-    var resOb;
-    var form = new FormData();
-    let f1 = path.resolve('./scenarios', 'www', 'large.png');
+    let resOb;
+    const form = new FormData();
+    const f1 = path.resolve('./scenarios', 'www', 'large.png');
     form.append('my_field', 'my value');
     form.append('my_field2', 'second');
     form.append('my_file2', fs.createReadStream(f1));
     form.submit('http://127.0.0.1:9022/testcontroller/form', function (err, res) {
       assert.strictEqual(err, null);
-      var resData = '';
+      let resData = '';
       // return true
       res.on('data', function (chunk) {
         resData = resData + chunk;
@@ -382,34 +380,88 @@ test.thenDo('Should be able to post multi-part form data', 5000,
     });
   }
 );
+test.thenDo('Should be able to post multi-part form data EmptyZip', 5000,
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
+    let resOb;
+    const form = new FormData();
+    const f1 = path.resolve('./scenarios', 'www', 'DR3-ErrorReport.zip');
+    form.append('link', fs.createReadStream(f1));
+    form.submit('http://127.0.0.1:9022/testcontroller/form', function (err, res) {
+      assert.strictEqual(err, null);
+      let resData = '';
+      // return true
+      res.on('data', function (chunk) {
+        resData = resData + chunk;
+      });
+      res.on('end', function () {
+        // This is the way
+        resData.trim();
+        resOb = JSON.parse(resData);
+        assert.strictEqual(fs.existsSync(resOb.UPLOADED_FORM_FILES[0].src), true);
+        fs.unlinkSync(resOb.UPLOADED_FORM_FILES[0].src);
+        p.done();
+      });
+      res.on('error', function (e) {
+        p.fail();
+        console.log('Got error: ' + e.message);
+      });
+    });
+  }
+);
+
 test.thenDo('test invalid file service',
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
-    let hdr = {};
+    const hdr = {};
     request('http://127.0.0.1:9022/testcontroller/serveInvalidFile', 'GET', hdr).then((res) => {
       assert.strictEqual(res.status, 404);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.response, 'Error: File not found');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   },
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
-    let hdr = {};
+    const hdr = {};
     request('http://127.0.0.1:9022/testcontroller/serveFolder', 'GET', hdr).then((res) => {
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
-      assert.strictEqual(res.response.index.length, 5);
+      assert.strictEqual(res.response.index.length, 6);
+      assert.strictEqual(res.response.index[0].type, 'file');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
+      p.fail();
+    });
+  },
+  /** @param {import('parker-promise').ParkerPromise} p */
+  (p) => {
+    const hdr = {};
+    request('http://127.0.0.1:9022/testcontroller/serveFolderData', 'GET', hdr).then((res) => {
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.response.index.length, 6);
+      const idx = res.response.index;
+      const len = idx.length;
+      let i = 0;
+      for (;i < len; i++) {
+        if (idx[i].name === 'test.json') {
+          assert.strictEqual(idx[i].data.hello, 'world');
+          assert.strictEqual(idx[i].content, 'js');
+        }
+      }
+      p.done();
+    }).catch((error) => {
+      console.error(error);
       p.fail();
     });
   }
-)
+
+);
 test.thenDo('Test file service',
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
@@ -419,23 +471,23 @@ test.thenDo('Test file service',
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.response.hello, 'world');
       modified = res.headers['last-modified'];
-      let hdr = {'if-modified-since': modified};
+      const hdr = {'if-modified-since': modified};
       return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.json', 'GET', hdr);
     }).then((res) => {
-      //test modified
-      assert.strictEqual(res.status, 304);  // not modified
+      // test modified
+      assert.strictEqual(res.status, 304); // not modified
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.headers['content-length'], '0');
       assert.strictEqual(res.headers['last-modified'], modified);
-      return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.json', 'HEAD')
+      return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.json', 'HEAD');
     }).then((res) => {
-      //test HEAD
-      assert.strictEqual(res.status, 200);  // HEAD request
+      // test HEAD
+      assert.strictEqual(res.status, 200); // HEAD request
       assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
       assert.strictEqual(res.headers['content-length'], '23');
       assert.strictEqual(res.headers['last-modified'], modified);
       assert.strictEqual(res.response, '');
-      return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.text', 'GET')
+      return request('http://127.0.0.1:9022/testcontroller/serveValidFile/test.text', 'GET');
     }).then((res) => {
       // test content type
       assert.strictEqual(res.status, 200);
@@ -443,12 +495,11 @@ test.thenDo('Test file service',
       assert.strictEqual(res.response.trim(), 'Hello World');
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
-  },
-
-)
+  }
+);
 test.thenDo('Stop a server',
   /** @param {import('parker-promise').ParkerPromise} p */
   (p) => {
@@ -456,24 +507,18 @@ test.thenDo('Stop a server',
       // console.log(res)
       p.done();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       p.fail();
     });
   }
 );
 test.whenDone(
-  /** @param {import('parker-promise').ParkerPromise} p */
   () => {
-    let endTime = new Date().getTime();
+    const endTime = new Date().getTime();
     console.log(color.GREEN + 'Succesfull finished in: ' + (endTime - startTime) + ' ms' + color.RESET);
     process.exit();
   })
-// .whenException(function (e) {
-//   process.stdout.write(color.RED)
-//   console.error(e)
-//   process.stdout.write(color.RESET)
-// })
-  .whenFail( (e) => {
+  .whenFail((e) => {
     process.stdout.write(color.RED);
     console.error(e);
     process.stdout.write(color.RESET);
