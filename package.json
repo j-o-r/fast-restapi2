@@ -3,7 +3,7 @@
   "name": "fast-restapi2",
   "type": "module",
   "description": "Fast, slim API server",
-  "version": "2.6.1",
+  "version": "2.6.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/j-o-r/fast-restapi2.git"
@@ -13,17 +13,10 @@
     "node": ">=18.x"
   },
   "dependencies": {
-    "formidable": "^2.0.1"
+    "formidable": "^2.1.2"
   },
   "devDependencies": {
     "@types/node": "^18.x",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsdoc": "^39.6.4",
-    "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-security": "^1.5.0",
-    "eslint-plugin-standard": "^5.0.0",
     "form-data": "^4.0.x",
     "parker-promise": "^1.0.1"
   },

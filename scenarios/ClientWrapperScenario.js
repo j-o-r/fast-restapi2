@@ -50,6 +50,7 @@ test.do('Test the NON server wrapper methods',
       let req = {};
       let res = {};
       let wrapper = new ClientWrapper(req, res);
+      console.log('IGNORE THIS ERROR:')
       wrapper.addHeader({}, 'pipo');
       p.done();
     }, 'error');
@@ -83,6 +84,7 @@ test.thenDo('Headers test',
   function getHeaders(p) {
     let client = new ClientWrapper(req, res);
     client.addHeader('Content-Type', 'application/json; charset=utf-8');
+    console.log('IGNORE THIS ERROR:')
     client.addHeader('content-type', 'plain/txt');
     client.addHeader('Connection', 'close');
     client.addHeader('Server', 'pipo');

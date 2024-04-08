@@ -344,7 +344,7 @@ test.thenDo('Test the api',
         p.fail();
         return;
       }
-      assert.strictEqual(res.statusCode, 500);
+      assert.strictEqual(res.statusCode, 400);
       p.done();
     });
   });
