@@ -1,4 +1,3 @@
-
 src
 Jakefile
 todo.md
@@ -13,3 +12,5 @@ specs2
 scenarios
 docs
 typings
+release
+jsconfig.json
