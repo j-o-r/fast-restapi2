@@ -6,11 +6,11 @@ export type OptionsObject = {
     /**
      * -
      */
-    port?: number;
+    port?: number | undefined;
     /**
      * -
      */
-    host?: string;
+    host?: string | undefined;
 };
 /**
  * public api

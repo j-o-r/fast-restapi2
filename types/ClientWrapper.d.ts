@@ -18,7 +18,7 @@ export type fileUpload = {
     size: number;
 };
 export type PostFormData = {
-    values: any;
+    values: Object;
     files: fileUpload[];
 };
 export type FormResolve = (argument: PostFormData) => any;
@@ -32,10 +32,10 @@ export class ClientWrapper {
     * @param {import('http').ServerResponse} res - Class: http.ServerResponse
     * @param  {object} [query] - key value object
     */
-    constructor(req: import("http").IncomingMessage, res: import("http").ServerResponse, query?: object);
+    constructor(req: import("http").IncomingMessage, res: import("http").ServerResponse, query?: object | undefined);
     req: import("http").IncomingMessage;
     res: import("http").ServerResponse<import("http").IncomingMessage>;
-    query: any;
+    query: object;
     /**
      * @type {import('http').OutgoingHttpHeaders}
      */
@@ -45,10 +45,10 @@ export class ClientWrapper {
     stream_write_count: number;
     stream_prefix: string;
     /**
-    * Get posted data
-    *
-    * @returns {Promise<any>} this
-    */
+     * Get posted data
+     *
+     * @returns {Promise<any>} The parsed JSON data from the request body
+     */
     getPost(): Promise<any>;
     /**
     * Add a header to the server repsponse
@@ -62,7 +62,7 @@ export class ClientWrapper {
     * @param  {boolean} [override] - overwrite key
     * @returns {void} this
     */
-    addHeader(k: string, v: string | number, override?: boolean): void;
+    addHeader(k: string, v: string | number, override?: boolean | undefined): void;
     /**
     * Get a header field
     *
@@ -85,7 +85,7 @@ export class ClientWrapper {
     * https://nodejs.org/api/http.html#http_response_write_chunk_encoding_callback
     * @returns {void}
     */
-    write(message: string | Buffer, encoding?: BufferEncoding): void;
+    write(message: string | Buffer, encoding?: BufferEncoding | undefined): void;
     /**
     * Serve something with a http status code
     *
@@ -102,25 +102,25 @@ export class ClientWrapper {
     *
     * @param {URL} file - full path to file
     * @param {string} [mime] - mimtype (overrule standard `application/json`)
-    * @returns {Promise<string>}
+    * @returns {Promise<>}
     */
-    serveFile(file: URL, mime?: string): Promise<string>;
+    serveFile(file: URL, mime?: string | undefined): Promise<any>;
     /**
     * Stream a a folder to the client
     * the client is disposed after this call
     *
     * @param {URL} folder - full path to folder
-    * @returns {Promise<string>}
+    * @returns {Promise<>}
     */
-    serveFolder(folder: URL): Promise<string>;
+    serveFolder(folder: URL): Promise<any>;
     /**
-    * Stream a a folder to the client
+    * Stream a a folder to the client, file data is added
     * the client is disposed after this call
     *
     * @param {URL} folder - full path to folder
-    * @returns {Promise<string>}
+    * @returns {Promise<>}
     */
-    serveFolderData(folder: URL): Promise<string>;
+    serveFolderData(folder: URL): Promise<any>;
     /**
     * Open a stream
     * Starts an array output '['
@@ -129,7 +129,7 @@ export class ClientWrapper {
     * @param  {string} [ns] - Start of an array namespace
     * @returns {void}
     */
-    openStream(ns?: string): void;
+    openStream(ns?: string | undefined): void;
     /**
     * Stream a javascript object
     *
@@ -144,7 +144,7 @@ export class ClientWrapper {
     * @param  {object} [trailing] - Trailing headers
     * @returns {void}
     */
-    closeStream(trailing?: object): void;
+    closeStream(trailing?: object | undefined): void;
     /**
     * Close and destroy this object
     *

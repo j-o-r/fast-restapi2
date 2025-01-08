@@ -7,15 +7,15 @@ class TestController {
 	//
 	// Example of an interface method
 	// This should be the default action on an object
-	static index(client) {
+	static async index(client) {
 		client.serve(200, { 'joe': ['bar'] });
 	}
 
-	static params(client, params) {
+	static async params(client, params) {
 		// http://..../testcontroller/params/param1/param2
 		client.serve(200, { params: params });
 	}
-	static query(client) {
+	static async query(client) {
 		// if(!client.query.hasOwnProperty('pipo')) {
 		//  console.log('Error hasOwnProperty')
 		// }
@@ -29,11 +29,11 @@ class TestController {
 	// This should never get called === hidden (_)
 	// The client is timed out on such a request
 	// But it's better to close the connection
-	static _hidden(client) {
+	static async _hidden(client) {
 		client.serve(200, 'I am not here');
 	}
 	// Just return the content
-	static echo(client) {
+	static async echo(client) {
 		client.getPost().then((data, files) => {
 			client.serve(200, { data });
 		}).catch((error) => {
@@ -42,11 +42,11 @@ class TestController {
 	}
 	// Return an Error,
 	// an Error should be converted to a string
-	static error(client) {
+	static async error(client) {
 		client.serve(500, new Error('an error'));
 	}
 
-	static stream(client) {
+	static async stream(client) {
 		// Create a stream
 		// which is quite a different approach
 		// 1000 objects to stream
@@ -75,7 +75,7 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
-	static stream404(client) {
+	static async stream404(client) {
 		// Create a stream
 		// but since we have no content to stream
 		// it will serve a 404
@@ -92,7 +92,7 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
-	static stream500(client) {
+	static async stream500(client) {
 		// Create a stream
 		// but the first object will create a 500
 		let i = 0;
@@ -108,7 +108,7 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
-	static stream200(client) {
+	static async stream200(client) {
 		// Create a stream
 		// The error will not show in the stream
 		// but is outputted to standard out
@@ -135,7 +135,7 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
-	static form(client) {
+	static async form(client) {
 		// Formidable
 		client.getPost().then((result) => {
 			client.serve(200, result);
@@ -144,11 +144,11 @@ class TestController {
 		});
 	}
 
-	static contenttype(client) {
+	static async contenttype(client) {
 		client.addHeader('Content-Type', 'plain/text', true);
 		client.serve(200, 'i,am,plain,text');
 	}
-	static serveValidFile(client, params) {
+	static async serveValidFile(client, params) {
 		let mime;
 		const file = params[0];
 		if (file === 'test.text') {
@@ -162,7 +162,7 @@ class TestController {
 		});
 	}
 
-	static serveFolder(client) {
+	static async serveFolder(client) {
 		// this will error
 		// unable to serve a folder
 		const file = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www'));
@@ -174,7 +174,7 @@ class TestController {
 			console.error(error);
 		});
 	}
-	static serveFolderData(client) {
+	static async serveFolderData(client) {
 		// this will error
 		// unable to serve a folder
 		const file = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www'));
@@ -187,7 +187,7 @@ class TestController {
 		});
 	}
 
-	static serveInvalidFile(client) {
+	static async serveInvalidFile(client) {
 		const file = new URL('file://i/do/not.exsist');
 		client.serveFile(file).then(() => {
 			// nothing
