@@ -1,51 +1,65 @@
 'use strict';
 
 import path from 'path';
+import { ClientWrapper } from '../lib/ClientWrapper.js';
 
 class TestController {
-	// We use the static methods
-	//
-	// Example of an interface method
-	// This should be the default action on an object
+	/**
+	* An index action
+	* @param {ClientWrapper} client
+	*/
 	static async index(client) {
 		client.serve(200, { 'joe': ['bar'] });
 	}
 
+	/**
+	* Test / Serve the params
+	* @param {ClientWrapper} client
+	*/
 	static async params(client, params) {
 		// http://..../testcontroller/params/param1/param2
 		client.serve(200, { params: params });
 	}
+
+	/**
+	* Test / Serve the query params
+	* @param {ClientWrapper} client
+	*/
 	static async query(client) {
-		// if(!client.query.hasOwnProperty('pipo')) {
-		//  console.log('Error hasOwnProperty')
-		// }
-		// http://..../testcontroller?pipo=circus
-		// if(client.query.hasOwnProperty('pipo')) {
-		//  console.log('allright')
-		// }
 		client.serve(200, { query: client.query });
 	}
 
-	// This should never get called === hidden (_)
-	// The client is timed out on such a request
-	// But it's better to close the connection
+	/**
+	* This is also a valid action
+	* and action with '_' is not call-able
+	* @param {ClientWrapper} client
+	*/
 	static async _hidden(client) {
 		client.serve(200, 'I am not here');
 	}
-	// Just return the content
+	/**
+	* Just echo the uploaded data
+	* @param {ClientWrapper} client
+	*/
 	static async echo(client) {
-		client.getPost().then((data, files) => {
+		client.getPost().then((data) => {
 			client.serve(200, { data });
 		}).catch((error) => {
 			client.serve(500, error);
 		});
 	}
-	// Return an Error,
-	// an Error should be converted to a string
+	/**
+	* Return an error, always
+	* @param {ClientWrapper} client
+	*/
 	static async error(client) {
 		client.serve(500, new Error('an error'));
 	}
 
+	/**
+	* Stream/Chunk content
+	* @param {ClientWrapper} client
+	*/
 	static async stream(client) {
 		// Create a stream
 		// which is quite a different approach
@@ -75,6 +89,10 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
+	/**
+	* Stream/Chunk content, but since there is no content, a 404 is the result
+	* @param {ClientWrapper} client
+	*/
 	static async stream404(client) {
 		// Create a stream
 		// but since we have no content to stream
@@ -92,6 +110,10 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
+	/**
+	* This stream wil create an error
+	* @param {ClientWrapper} client
+	*/
 	static async stream500(client) {
 		// Create a stream
 		// but the first object will create a 500
@@ -108,6 +130,10 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
+	/**
+	* Happy 200 stream
+	* @param {ClientWrapper} client
+	*/
 	static async stream200(client) {
 		// Create a stream
 		// The error will not show in the stream
@@ -135,6 +161,10 @@ class TestController {
 		client.closeStream({ 'what': d.toString() });
 	}
 
+	/**
+	* Echo back form data
+	* @param {ClientWrapper} client
+	*/
 	static async form(client) {
 		// Formidable
 		client.getPost().then((result) => {
@@ -144,10 +174,19 @@ class TestController {
 		});
 	}
 
+	/**
+	* Just set a header
+	* @param {ClientWrapper} client
+	*/
 	static async contenttype(client) {
 		client.addHeader('Content-Type', 'plain/text', true);
 		client.serve(200, 'i,am,plain,text');
 	}
+
+	/**
+	* Serve a file
+	* @param {ClientWrapper} client
+	*/
 	static async serveValidFile(client, params) {
 		let mime;
 		const file = params[0];
@@ -162,6 +201,10 @@ class TestController {
 		});
 	}
 
+	/**
+	* Serve a folder
+	* @param {ClientWrapper} client
+	*/
 	static async serveFolder(client) {
 		// this will error
 		// unable to serve a folder
@@ -174,6 +217,11 @@ class TestController {
 			console.error(error);
 		});
 	}
+
+	/**
+	* Serve a folder and all files (data)
+	* @param {ClientWrapper} client
+	*/
 	static async serveFolderData(client) {
 		// this will error
 		// unable to serve a folder
@@ -187,6 +235,10 @@ class TestController {
 		});
 	}
 
+	/**
+	* Serve a file that does not exsist
+	* @param {ClientWrapper} client
+	*/
 	static async serveInvalidFile(client) {
 		const file = new URL('file://i/do/not.exsist');
 		client.serveFile(file).then(() => {

@@ -47,9 +47,9 @@ export class ClientWrapper {
     /**
      * Get posted data
      *
-     * @returns {Promise<any>} The parsed JSON data from the request body
+     * @returns {Promise<PostFormData|any>} The parsed JSON data from the request body
      */
-    getPost(): Promise<any>;
+    getPost(): Promise<PostFormData | any>;
     /**
     * Add a header to the server repsponse
     * @todo : Do we realy need to be so strict?
@@ -60,7 +60,7 @@ export class ClientWrapper {
     * @param  {string} k - key
     * @param  {string|number} v - value
     * @param  {boolean} [override] - overwrite key
-    * @returns {void} this
+    * @throws {Error}
     */
     addHeader(k: string, v: string | number, override?: boolean | undefined): void;
     /**

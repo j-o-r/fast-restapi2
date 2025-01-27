@@ -17,7 +17,7 @@
     "formidable": "^3.5.2"
   },
   "devDependencies": {
-    "@types/node": "^20.x"
+    "@j-o-r/sh": "^1.1.1"
   },
   "scripts": {
     "publish": "npm run release && npm publish --access public",
