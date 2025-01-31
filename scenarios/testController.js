@@ -194,11 +194,7 @@ class TestController {
 			mime = 'plain/text';
 		}
 		const fp = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www', file));
-		client.serveFile(fp, mime).then(() => {
-			// after serving, the client is disposed
-		}).catch((error) => {
-			console.error(error);
-		});
+		await client.serveFile(fp, mime);
 	}
 
 	/**
@@ -209,15 +205,23 @@ class TestController {
 		// this will error
 		// unable to serve a folder
 		const file = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www'));
-		client.serveFolder(file).then(() => {
-			// nothing
-			// after serving, the client is disposed
-			// a `not found file` is not an error in this context
-		}).catch((error) => {
-			console.error(error);
-		});
+		await client.serveFolder(file);
 	}
 
+	/**
+	* Serve a folder
+	* @param {ClientWrapper} client
+	*/
+	static async serveInvalidFolder(client) {
+		// this will error
+		// unable to serve a folder
+		const file = new URL('file://pipo');
+		try {
+		  await client.serveFolder(file);
+		} catch (e) {
+			client.serve(404, e);
+		}
+	}
 	/**
 	* Serve a folder and all files (data)
 	* @param {ClientWrapper} client
@@ -226,13 +230,7 @@ class TestController {
 		// this will error
 		// unable to serve a folder
 		const file = new URL('file://' + path.resolve(process.cwd(), 'scenarios', 'www'));
-		client.serveFolderData(file).then(() => {
-			// nothing
-			// after serving, the client is disposed
-			// a `not found file` is not an error in this context
-		}).catch((error) => {
-			console.error(error);
-		});
+		await client.serveFolderData(file);
 	}
 
 	/**
@@ -241,12 +239,11 @@ class TestController {
 	*/
 	static async serveInvalidFile(client) {
 		const file = new URL('file://i/do/not.exsist');
-		client.serveFile(file).then(() => {
-			// nothing
-			// after serving, the client is disposed
-		}).catch((error) => {
-			console.error(error);
-		});
+		try {
+		  await client.serveFile(file);
+		} catch (e) {
+		  client.serve(404, e);
+		}
 	}
 }
 export default TestController;

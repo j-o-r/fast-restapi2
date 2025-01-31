@@ -1,4 +1,5 @@
 src
+tools
 Jakefile
 todo.md
 .jshintrc

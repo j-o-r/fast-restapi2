@@ -220,7 +220,7 @@ test.add('Post form zip file', async () => {
 	assert.strictEqual(fs.existsSync(resOb.files[0].src), true);
 	fs.unlinkSync(resOb.files[0].src);
 });
-test.add('Does not excsists', async () => {
+test.add('Serve invalid file', async () => {
 	// Serve does not exsists
 	const hdr = {};
 	const res = await request('http://127.0.0.1:9022/testcontroller/serveInvalidFile', 'GET', hdr);
@@ -230,7 +230,7 @@ test.add('Does not excsists', async () => {
 });
 
 test.add('Is _hidden', async () => {
-	// Serve does not exsists
+	// Is not hidden
 	const hdr = {};
 	const res = await request('http://127.0.0.1:9022/testcontroller/_hidden', 'GET', hdr);
 	console.log(res.response);
@@ -246,6 +246,14 @@ test.add('Serve a folder', async () => {
 	assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
 	assert.strictEqual(res.response.index.length, 6);
 	assert.strictEqual(res.response.index[0].type, 'file');
+});
+
+test.add('Serve an invalid folder', async () => {
+	// Serve a folder
+	const hdr = {};
+	const res = await request('http://127.0.0.1:9022/testcontroller/serveInvalidFolder', 'GET', hdr);
+	assert.strictEqual(res.status, 404);
+	assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
 });
 test.add('Serve a folder with file data', async () => {
 	// Serve a folder with file data
@@ -295,6 +303,7 @@ test.add('File GET, HEAD, MODIFIED', async () => {
 	assert.strictEqual(res.headers['content-type'], 'plain/text');
 	assert.strictEqual(res.response.trim(), 'Hello World');
 });
+
 test.add('Stop the server', async () => {
 	// Stop the server
 	assert.doesNotReject(async () => {
