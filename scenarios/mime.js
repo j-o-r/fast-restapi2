@@ -2,7 +2,8 @@
 import { assert, Test } from '@j-o-r/sh';
 import mime from '../lib/mime.js';
 
-const test = new Test();
+const isNpm = process.env.npm_lifecycle_event ? true : false;
+const test = new Test(isNpm);
 
 test.add('test', () => {
 	let m = mime('file.XML');

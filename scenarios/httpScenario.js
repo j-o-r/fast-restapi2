@@ -7,9 +7,10 @@ import TestController from './testController.js';
 import request from './request.js';
 import helper from './helper.js';
 import server from '../lib/api-server.js';
-const startTime = new Date().getTime();
 
-const test = new Test();
+const isNpm = process.env.npm_lifecycle_event ? true : false;
+const test = new Test(isNpm);
+
 test.add('Error, no port', async () => {
 	assert.rejects(async () => {
 		await server.create('v1', { host: '127.0.0.1' });

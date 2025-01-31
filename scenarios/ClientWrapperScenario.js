@@ -5,7 +5,8 @@
 import { assert, Test } from '@j-o-r/sh';
 import { ClientWrapper } from '../lib/ClientWrapper.js';
 
-const test = new Test();
+const isNpm = process.env.npm_lifecycle_event ? true : false;
+const test = new Test(isNpm);
 
 test.add('Add/ get header', () => {
 

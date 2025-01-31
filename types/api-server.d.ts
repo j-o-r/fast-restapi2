@@ -21,14 +21,14 @@ declare class Api {
     *
     * @param  {string} preFix - namespace part of the URL to distinguish the API or a static file
     * @param  {OptionsObject} options - http(s) startup options
-    * @param  {object} app - class definition with static methods
-    * @returns {Promise<object>}
+    * @param  {object} app - class definition with static (async) methods
+    * @returns {Promise<OptionsObject>}
     */
-    static create(preFix: string, options: OptionsObject, app: object): Promise<object>;
+    static create(preFix: string, options: OptionsObject, app: object): Promise<OptionsObject>;
     /**
     * Stop, delete a server
     *
-    * @returns {Promise<string>}
+    * @returns {Promise<>}
     */
-    static delete(): Promise<string>;
+    static delete(): Promise<any>;
 }
